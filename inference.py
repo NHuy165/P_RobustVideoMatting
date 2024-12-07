@@ -18,6 +18,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from typing import Optional, Tuple
 from tqdm.auto import tqdm
+from fractions import Fraction
 
 from inference_utils import VideoReader, VideoWriter, ImageSequenceReader, ImageSequenceWriter
 
@@ -79,7 +80,7 @@ def convert_video(model,
     
     # Initialize writers
     if output_type == 'video':
-        frame_rate = source.frame_rate if isinstance(source, VideoReader) else 30
+        frame_rate = Fraction(source.frame_rate) if isinstance(source, VideoReader) else 30
         output_video_mbps = 1 if output_video_mbps is None else output_video_mbps
         if output_composition is not None:
             writer_com = VideoWriter(
